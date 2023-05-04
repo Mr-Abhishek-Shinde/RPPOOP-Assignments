@@ -14611,15 +14611,20 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
         <span class="bp">self</span><span class="o">.</span><span class="n">acc_type</span> <span class="o">=</span> <span class="n">acc_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="n">balance</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pin</span> <span class="o">=</span> <span class="n">pin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transaction_history</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">transaction_history</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;intial deposit&quot;</span><span class="p">,</span> <span class="n">balance</span><span class="p">))</span>
         
     <span class="k">def</span> <span class="nf">deposit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">+=</span> <span class="n">amount</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transaction_history</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;deposit&quot;</span><span class="p">,</span> <span class="n">amount</span><span class="p">))</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Amount deposited: ₹</span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        
+          
     <span class="k">def</span> <span class="nf">withdraw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span>
         <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pin</span> <span class="o">==</span> <span class="n">pin</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">&gt;=</span> <span class="n">amount</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">-=</span> <span class="n">amount</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">transaction_history</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;withdrawal&quot;</span><span class="p">,</span> <span class="n">amount</span><span class="p">))</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Amount withdrawn: ₹</span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Insufficient balance!&quot;</span><span class="p">)</span>
@@ -14635,6 +14640,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     <span class="k">def</span> <span class="nf">get_balance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Available balance: ₹</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">balance</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         
+    <span class="k">def</span> <span class="nf">get_transaction_history</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transaction_history</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No transactions found&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">transaction</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction_history</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>        
 </pre></div>
 
      </div>
@@ -14698,6 +14709,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                         <span class="n">account_reciever</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__accounts</span><span class="p">[</span><span class="n">acc_num_reciever</span><span class="p">]</span>
                         <span class="n">account_sender</span><span class="o">.</span><span class="n">balance</span> <span class="o">-=</span> <span class="n">amount</span>
                         <span class="n">account_reciever</span><span class="o">.</span><span class="n">balance</span> <span class="o">+=</span> <span class="n">amount</span>
+                        <span class="n">account_sender</span><span class="o">.</span><span class="n">transaction_history</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="sa">f</span><span class="s2">&quot;transfered to </span><span class="si">{</span><span class="n">account_reciever</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">amount</span><span class="p">))</span>
+                        <span class="n">account_reciever</span><span class="o">.</span><span class="n">transaction_history</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="sa">f</span><span class="s2">&quot;recieved from </span><span class="si">{</span><span class="n">account_sender</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">amount</span><span class="p">))</span>
                         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;₹</span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s2"> transferred to </span><span class="si">{</span><span class="n">account_reciever</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;s account successfully.&quot;</span><span class="p">)</span>
                         <span class="k">return</span>
                     <span class="k">else</span><span class="p">:</span>
@@ -14831,8 +14844,9 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;4. View available balance&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;5. View account details&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;6. Transfer funds&quot;</span><span class="p">)</span> <span class="c1">#transfer money from one acc to other acc in same bank</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;7. Close account&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;8. Exit&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;7. Transaction History&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;8. Close account&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;9. Exit&quot;</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14949,7 +14963,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
             <span class="n">acc_num_reciever</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter the account number of reciever: &quot;</span><span class="p">))</span>
             <span class="n">amount</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter the amount you want to transfer: &quot;</span><span class="p">))</span>
             <span class="n">bank</span><span class="o">.</span><span class="n">transfer_funds</span><span class="p">(</span><span class="n">acc_num_sender</span><span class="p">,</span> <span class="n">acc_num_reciever</span><span class="p">,</span> <span class="n">pin_sender</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
-        
+            
         <span class="k">elif</span><span class="p">(</span><span class="n">choice</span> <span class="o">==</span> <span class="mi">7</span><span class="p">):</span>
             <span class="n">acc_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter your account number: &quot;</span><span class="p">))</span>
             <span class="n">pin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter your pin: &quot;</span><span class="p">))</span>
@@ -14957,9 +14971,18 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
                 <span class="k">continue</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">acc</span> <span class="o">=</span> <span class="n">bank</span><span class="o">.</span><span class="n">get_account</span><span class="p">(</span><span class="n">acc_num</span><span class="p">,</span> <span class="n">pin</span><span class="p">)</span>
-            <span class="n">bank</span><span class="o">.</span><span class="n">close_account</span><span class="p">(</span><span class="n">acc_num</span><span class="p">,</span> <span class="n">pin</span><span class="p">)</span>
-
+                <span class="n">acc</span><span class="o">.</span><span class="n">get_transaction_history</span><span class="p">()</span>
+        
         <span class="k">elif</span><span class="p">(</span><span class="n">choice</span> <span class="o">==</span> <span class="mi">8</span><span class="p">):</span>
+            <span class="n">acc_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter your account number: &quot;</span><span class="p">))</span>
+            <span class="n">pin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter your pin: &quot;</span><span class="p">))</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">bank</span><span class="o">.</span><span class="n">get_account</span><span class="p">(</span><span class="n">acc_num</span><span class="p">,</span> <span class="n">pin</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">acc</span> <span class="o">=</span> <span class="n">bank</span><span class="o">.</span><span class="n">get_account</span><span class="p">(</span><span class="n">acc_num</span><span class="p">,</span> <span class="n">pin</span><span class="p">)</span>
+                <span class="n">bank</span><span class="o">.</span><span class="n">close_account</span><span class="p">(</span><span class="n">acc_num</span><span class="p">,</span> <span class="n">pin</span><span class="p">)</span>
+
+        <span class="k">elif</span><span class="p">(</span><span class="n">choice</span> <span class="o">==</span> <span class="mi">9</span><span class="p">):</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exiting...&quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Thank you for banking with us.&quot;</span><span class="p">)</span>
             <span class="k">return</span>
@@ -15036,14 +15059,31 @@ Choose the action you want to perfrom:
 4. View available balance
 5. View account details
 6. Transfer funds
-7. Close account
-8. Exit
+7. Transaction History
+8. Close account
+9. Exit
+Enter your choice: 7
+
+Enter your account number: 10001
+Enter your pin: 13
+Account not found!
+Recheck the account number entered.
+Choose the action you want to perfrom:
+1. Open new account
+2. Withdraw amount
+3. Deposit amount
+4. View available balance
+5. View account details
+6. Transfer funds
+7. Transaction History
+8. Close account
+9. Exit
 Enter your choice: 1
 
 Enter you name: Abhi
 Enter the account type: savings
 Enter a pin to secure your account: 1234
-Enter the amount you want to deposit: 1500
+Enter the amount you want to deposit: 1250
 Account opened successfully!
 Your account number is: 10001
 
@@ -15054,32 +15094,15 @@ Choose the action you want to perfrom:
 4. View available balance
 5. View account details
 6. Transfer funds
-7. Close account
-8. Exit
-Enter your choice: 5
-
-Enter your account number: 10001
-Enter your pin: 1234
-Account holder name: Abhi
-Account Number: 10001
-Account type: savings
-Balance: ₹1500
-
-Choose the action you want to perfrom:
-1. Open new account
-2. Withdraw amount
-3. Deposit amount
-4. View available balance
-5. View account details
-6. Transfer funds
-7. Close account
-8. Exit
+7. Transaction History
+8. Close account
+9. Exit
 Enter your choice: 2
 
 Enter your account number: 10001
 Enter your pin: 1234
-Enter the amount you want to withdraw: 200
-Amount withdrawn: ₹200
+Enter the amount you want to withdraw: 500
+Amount withdrawn: ₹500
 
 Choose the action you want to perfrom:
 1. Open new account
@@ -15088,45 +15111,15 @@ Choose the action you want to perfrom:
 4. View available balance
 5. View account details
 6. Transfer funds
-7. Close account
-8. Exit
-Enter your choice: 3
-
-Enter your account number: 10001
-Enter your pin: 1234
-Enter the amount you want to deposit: 5000
-Amount deposited: ₹5000
-
-Choose the action you want to perfrom:
-1. Open new account
-2. Withdraw amount
-3. Deposit amount
-4. View available balance
-5. View account details
-6. Transfer funds
-7. Close account
-8. Exit
-Enter your choice: 4
-
-Enter your account number: 10001
-Enter your pin: 1234
-Available balance: ₹6300
-
-Choose the action you want to perfrom:
-1. Open new account
-2. Withdraw amount
-3. Deposit amount
-4. View available balance
-5. View account details
-6. Transfer funds
-7. Close account
-8. Exit
+7. Transaction History
+8. Close account
+9. Exit
 Enter your choice: 1
 
-Enter you name: Amol
-Enter the account type: savings
+Enter you name: harshal
+Enter the account type: salary
 Enter a pin to secure your account: 1212
-Enter the amount you want to deposit: 2000
+Enter the amount you want to deposit: 20000
 Account opened successfully!
 Your account number is: 10002
 
@@ -15137,15 +15130,16 @@ Choose the action you want to perfrom:
 4. View available balance
 5. View account details
 6. Transfer funds
-7. Close account
-8. Exit
+7. Transaction History
+8. Close account
+9. Exit
 Enter your choice: 6
 
-Enter your account number: 10001
-Enter your pin: 1234
-Enter the account number of reciever: 10002
-Enter the amount you want to transfer: 2000
-₹2000 transferred to Amol&#39;s account successfully.
+Enter your account number: 10002
+Enter your pin: 1212
+Enter the account number of reciever: 10001
+Enter the amount you want to transfer: 10000
+₹10000 transferred to Abhi&#39;s account successfully.
 
 Choose the action you want to perfrom:
 1. Open new account
@@ -15154,9 +15148,61 @@ Choose the action you want to perfrom:
 4. View available balance
 5. View account details
 6. Transfer funds
-7. Close account
-8. Exit
-Enter your choice: 8
+7. Transaction History
+8. Close account
+9. Exit
+Enter your choice: 7
+
+Enter your account number: 10002
+Enter your pin: 1212
+(&#39;intial deposit&#39;, 20000)
+(&#39;transfered to Abhi&#39;, 10000)
+
+Choose the action you want to perfrom:
+1. Open new account
+2. Withdraw amount
+3. Deposit amount
+4. View available balance
+5. View account details
+6. Transfer funds
+7. Transaction History
+8. Close account
+9. Exit
+Enter your choice: 7
+
+Enter your account number: 10001
+Enter your pin: 1234
+(&#39;intial deposit&#39;, 1250)
+(&#39;withdrawal&#39;, 500)
+(&#39;recieved from harshal&#39;, 10000)
+
+Choose the action you want to perfrom:
+1. Open new account
+2. Withdraw amount
+3. Deposit amount
+4. View available balance
+5. View account details
+6. Transfer funds
+7. Transaction History
+8. Close account
+9. Exit
+Enter your choice: 4
+
+Enter your account number: 10001
+Enter your pin: 1234
+Available balance: ₹10750
+
+Choose the action you want to perfrom:
+1. Open new account
+2. Withdraw amount
+3. Deposit amount
+4. View available balance
+5. View account details
+6. Transfer funds
+7. Transaction History
+8. Close account
+9. Exit
+Enter your choice: 9
 
 Exiting...
 Thank you for banking with us.
